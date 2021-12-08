@@ -64,4 +64,4 @@ container_runtime: containerd
 # docker_proxy_exclude: "localhost,127.0.0.1"          # Adresses to exclude from proxy
 # # NFS configs
 # setup_nfs: true
-# folders: ["default","kafka","userprofile"]
+folders: ["default","kafka","userprofile"]
