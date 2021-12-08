@@ -2,6 +2,13 @@
 - hosts: kube-cluster
   gather_facts: yes
   become: yes
+  become_method: sudo
+  roles:
+    - { role: bootstrap, tags: bootstrap }
+
+- hosts: kube-cluster
+  gather_facts: yes
+  become: yes
   roles:
     - { role: docker, tags: docker }
 

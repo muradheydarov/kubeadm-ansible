@@ -1,0 +1,46 @@
+---
+- name: Install nfs-utils
+  yum: 
+    name: nfs-utils 
+    state: latest
+  when: "'k8s-m' in ansible_hostname"
+
+- name: Create a mountable directory if it does not exist
+  file:
+    path: /nfs/{{ item }}
+    state: directory
+    owner: root
+    group: root
+    mode: '0777'
+  with_items: "{{ folders }}"
+  when: "'k8s-m' in ansible_hostname"
+
+- name: Enable rpcbind nfslock nfs
+  service:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - rpcbind
+    - nfslock
+    - nfs
+  when: "'k8s-m' in ansible_hostname"
+
+- name: Copy exports file
+  ansible.builtin.template:
+    src: exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  when: "'k8s-m' in ansible_hostname"
+
+- name: Restart nfs-server.service
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    state: started
+    name: nfs-server.service
+  when: "'k8s-m' in ansible_hostname"
+
+- name: Re-export the share
+  command: exportfs -rav
+  when: "'k8s-m' in ansible_hostname"
