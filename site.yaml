@@ -1,17 +1,21 @@
 ---
+- hosts: repo
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: "NFS setup"
+      include_role:
+        name: nfs
+      when: "setup_nfs"
+      run_once: yes
+      tags: nfs
+
 - hosts: kube-cluster
   gather_facts: yes
   become: yes
   become_method: sudo
   roles:
-    - { role: nfs, tags: nfs }
-
-# - hosts: kube-cluster
-#   gather_facts: yes
-#   become: yes
-#   become_method: sudo
-#   roles:
-#     - { role: bootstrap, tags: bootstrap }
+    - { role: bootstrap, tags: bootstrap }
 
 # - hosts: kube-cluster
 #   gather_facts: yes
