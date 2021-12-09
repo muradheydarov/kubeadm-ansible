@@ -8,8 +8,8 @@
 - name: Include Pre-reqs setup task
   include: pre_setup.yml
 
-- name: Include task to disable swap
-  include: disable_swap.yml
+# - name: Include task to disable swap
+#   include: disable_swap.yml
 
 - name: Include task to configure timezone and ntp
   include: configure_timezone_ntp.yml
