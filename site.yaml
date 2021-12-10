@@ -15,7 +15,7 @@
   become: yes
   become_method: sudo
   roles:
-    - { role: pre-install, tags: pre-install }
+    - { role: commons/pre-install, tags: pre-install }
 
 # - hosts: kube-cluster
 #   gather_facts: yes
