@@ -1,0 +1,6 @@
+---
+- name: Configure firewalld on master nodes
+  include: configure_firewalld_rules_master.yml
+  
+- name: Configure firewalld on worker nodes
+  include: configure_firewalld_rules_worker.yml  

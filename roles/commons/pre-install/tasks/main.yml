@@ -1,41 +1,41 @@
 ---
+- name: Add the OS specific variables 
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}.yml"
 
-- name: Install Kubernetes packages
-  include_tasks: pkg.yml
+- name: Include Pre-reqs setup task
+  include: pre_setup.yml
 
-- name: Disable system swap
-  shell: "swapoff -a"
+- name: Include task to disable swap
+  include: disable_swap.yml
 
-- name: Remove current swaps from fstab
-  lineinfile:
-    dest: /etc/fstab
-    regexp: '(?i)^([^#][\S]+\s+(none|swap)\s+swap.*)'
-    line: '# \1'
-    backrefs: yes
-    state: present
+- name: Include task to configure timezone and ntp
+  include: configure_timezone_ntp.yml
 
-- name: Disable swappiness and pass bridged IPv4 traffic to iptable's chains
-  sysctl:
-    name: "{{ item.name }}"
-    value: "{{ item.value }}"
-    state: present
-  with_items:
-    - { name: 'vm.swappiness', value: '0' }
-    - { name: 'net.bridge.bridge-nf-call-iptables', value: '1' }
+- name: Include task to load required kernel modules and sysctl configs
+  include: load_kernel_modules_sysctl.yml
 
-- name: Create service drop-in directory
-  file:
-    path: /etc/systemd/system/kubelet.service.d/
-    state: directory
-    owner: "{{ ansible_user | default(ansible_user_id) }}"
-    group: "{{ ansible_user | default(ansible_user_id) }}"
-    mode: 0755
+- name: Include task to configure /etc/hosts file on each node
+  include: configure_etc_host_file.yml
+  when: configure_etc_host_file
 
-- name: Copy kubeadm conf to drop-in directory
-  template: src=20-extra-args.conf.j2 dest=/etc/systemd/system/kubelet.service.d/20-extra-args.conf
+- name: Include task to configure docker
+  include: setup_docker.yml
+  when: container_runtime == "docker"
 
-- name: Reload kubelet daemon
-  systemd:
-    name: kubelet
-    daemon_reload: yes
-    enabled: yes
+- name: Include task to configure cri-o container runtime
+  include: setup_crio.yml
+  when: container_runtime == "cri-o"
+
+- name: Include task to configure containerd container runtime
+  include: setup_containerd.yml
+  when: container_runtime == "containerd"
+
+- name: Include task to install  k8s packages
+  include: install_k8s_packages.yml
+
+- name: Include task to configure firewalld
+  include: configure_firewalld.yml
+  when: configure_firewalld

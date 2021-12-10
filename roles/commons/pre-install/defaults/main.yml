@@ -34,3 +34,9 @@ flannel_udp_ports:
 # Default pod subnet for cri-o runtime
 pod_network_cidr:
   - "10.85.0.0/16"
+
+systemd_dir: /lib/systemd/system
+system_env_dir: /etc/sysconfig
+network_dir: /etc/kubernetes/network
+kubeadmin_config: /etc/kubernetes/admin.conf
+kube_addon_dir: /etc/kubernetes/addon

@@ -1,0 +1,8 @@
+---
+- name: Configure firewalld on worker nodes
+  ansible.posix.firewalld:
+    port: "{{ item }}/tcp"
+    permanent: yes
+    state: enabled
+  with_items: '{{ k8s_worker_ports }}'
+  when: ("'node' in ansible_hostname" or "'worker' in ansible_hostname")
