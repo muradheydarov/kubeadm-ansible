@@ -1,9 +1,4 @@
 ---
-- name: Configure Cri-o YUM repository
-  ansible.builtin.template:
-    src: crio.repo.j2
-    dest: /etc/yum.repos.d/crio.repo
-
 - name: Setup required sysctl params
   ansible.posix.sysctl:
     name: '{{ item.key }}'

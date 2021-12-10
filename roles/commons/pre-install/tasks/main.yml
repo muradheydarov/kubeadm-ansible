@@ -21,18 +21,6 @@
   include: configure_etc_host_file.yml
   when: configure_etc_host_file
 
-- name: Include task to configure docker
-  include: setup_docker.yml
-  when: container_runtime == "docker"
-
-- name: Include task to configure cri-o container runtime
-  include: setup_crio.yml
-  when: container_runtime == "cri-o"
-
-- name: Include task to configure containerd container runtime
-  include: setup_containerd.yml
-  when: container_runtime == "containerd"
-
 - name: Include task to install  k8s packages
   include: install_k8s_packages.yml
 

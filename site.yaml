@@ -17,11 +17,11 @@
   roles:
     - { role: commons/pre-install, tags: pre-install }
 
-# - hosts: kube-cluster
-#   gather_facts: yes
-#   become: yes
-#   roles:
-#     - { role: docker, tags: docker }
+- hosts: kube-cluster
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: container-runtime, tags: container-runtime }
 
 # - hosts: master
 #   gather_facts: yes
