@@ -5,8 +5,11 @@
     dest: /etc/yum.repos.d/kubernetes.repo
 
 - name: Install kubernetes packages
-  yum:
-    name: [kubelet,kubeadm,kubectl]
+  ansible.builtin.yum:
+    name: 
+      - kubelet-{{ k8s_version }}
+      - kubeadm-{{ k8s_version }}
+      - kubectl-{{ k8s_version }}
     disable_excludes: kubernetes
 
 - name: Enable kubelet service
