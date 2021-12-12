@@ -4,8 +4,6 @@ basic_packages:
   - bash-completion
   - wget
   - curl
-  - firewalld
-  - python3-firewall
   - yum-utils
   - lvm2
   - device-mapper-persistent-data
