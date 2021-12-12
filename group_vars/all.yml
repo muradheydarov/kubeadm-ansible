@@ -1,8 +1,8 @@
 # Ansible
 # ansible_user: root
 
-# Kubernetes
-k8s_version: "1.21.0"
+# Kubernetes version to be installed
+k8s_version: "1.22.0"
 
 # 1.8.x feature: --feature-gates SelfHosting=true
 init_opts: ""
@@ -49,7 +49,7 @@ container_runtime: docker
 # helm helm version
 # helm_version: "v2.17.0"
 
-                                    # Kubernetes version to be installed
+                                  
 selinux_state: permissive                              # SELinux state to be set on k8s nodes                 
 timezone: "Asia/Baku"                                  # Timezone to set on all nodes
 # k8s_cni: calico                                      # calico, flannel
