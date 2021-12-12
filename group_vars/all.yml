@@ -2,7 +2,7 @@
 # ansible_user: root
 
 # Kubernetes version to be installed
-k8s_version: "1.22.0"
+k8s_version: "1.21.0"
 
 # 1.8.x feature: --feature-gates SelfHosting=true
 init_opts: ""

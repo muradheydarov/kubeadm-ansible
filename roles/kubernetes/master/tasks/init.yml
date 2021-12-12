@@ -34,6 +34,13 @@
     mode: 0755
     remote_src: true
 
+- name: Get the token for joining the worker nodes
+  shell: kubeadm token create --print-join-command
+  register: kubernetes_join_command
+
+- name: Copy join command to local file.
+  local_action: copy content="{{ kubernetes_join_command.stdout_lines[0] }}" dest="/tmp/kubernetes_join_command" mode=0777
+
 - name: Deploy kubernetes dashboard into cluster
   when: init_cluster is succeeded and enable_dashboard
   command: |

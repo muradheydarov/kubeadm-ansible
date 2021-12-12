@@ -4,14 +4,16 @@
   shell: "kubeadm reset --force"
   register: reset_cluster
 
+- name: Copy join command from Ansiblehost to the worker nodes
+  copy:
+    src: /tmp/kubernetes_join_command
+    dest: /tmp/kubernetes_join_command
+    mode: 077
+     
 - name: Join to Kubernetes cluster
   when: reset_cluster is succeeded
-  shell: |
-    kubeadm join --token {{ token }} \
-                --discovery-token-unsafe-skip-ca-verification \
-                {{ master_ip }}:6443
+  command: sh /tmp/kubernetes_join_command
   register: join_cluster
-  # See: https://github.com/jetstack/cert-manager/issues/2640 with using kubeadm + calico + cert-manager
   environment:
     no_proxy: "$no_proxy,.svc,.svc.cluster.local"
   notify:
