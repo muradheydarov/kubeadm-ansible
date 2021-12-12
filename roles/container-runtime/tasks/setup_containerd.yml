@@ -16,7 +16,7 @@
   ansible.builtin.shell: containerd config default > /etc/containerd/config.toml
   run_once: true
 
-- name: Set cgroup driver as systemd
+- name: Set cgroup driver as systemd for containerd
   ansible.builtin.template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json

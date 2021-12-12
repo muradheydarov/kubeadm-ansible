@@ -17,6 +17,18 @@
   roles:
     - { role: commons/pre-install, tags: pre-install }
 
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: commons/firewall-rules/master, tags: master }
+
+- hosts: worker
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: commons/firewall-rules/worker, tags: worker }    
+
 - hosts: kube-cluster
   gather_facts: yes
   become: yes

@@ -1,5 +1,5 @@
 ---
-- name: Setup required sysctl params
+- name: Setup required sysctl params for cri-o
   ansible.posix.sysctl:
     name: '{{ item.key }}'
     value: '{{ item.value }}'

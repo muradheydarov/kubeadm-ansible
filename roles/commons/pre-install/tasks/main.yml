@@ -23,7 +23,3 @@
 
 - name: Include task to install  k8s packages
   include: install_k8s_packages.yml
-
-- name: Include task to configure firewalld
-  include: configure_firewalld.yml
-  when: configure_firewalld

@@ -1,0 +1,17 @@
+---
+- name: Generate /etc/iptables.conf file
+  ansible.builtin.template:
+    src: worker_iptables_rules.j2
+    dest: /etc/iptables.conf
+
+- name: Generate iptables unit
+  ansible.builtin.template:
+    src: iptables.service.j2
+    dest: /etc/systemd/system/iptables.service
+    
+- name: Enable and check iptables service
+  systemd:
+    name: iptables
+    daemon_reload: yes
+    state: started
+    enabled: yes
