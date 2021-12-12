@@ -7,9 +7,7 @@
 - name: Join to Kubernetes cluster
   when: reset_cluster is succeeded
   shell: >
-    kubeadm join --token={{ hostvars['K8S_TOKEN_HOLDER']['token'] }}
-    --discovery-token-ca-cert-hash sha256:{{ hostvars['K8S_TOKEN_HOLDER']['hash'] }}
-    {{ master_ip }}:6443
+    {{ hostvars['K8S_TOKEN_HOLDER']['command'] }}
   register: join_cluster
   environment:
     no_proxy: "$no_proxy,.svc,.svc.cluster.local"

@@ -34,19 +34,14 @@
     mode: 0755
     remote_src: true
 
-- name: Get the token for joining the worker nodes
-  shell: kubeadm token list | cut -d ' ' -f1 | sed -n '2p'
+- name: Get the join command for the worker nodes
+  shell: kubeadm token create --print-join-command
   register: K8S_TOKEN
-
-- name: Get the CA Hash for joining the worker nodes
-  shell: openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
-  register: K8S_MASTER_CA_HASH  
 
 - name: "Add K8S Token and Hash to dummy host"
   add_host:
     name:   "K8S_TOKEN_HOLDER"
-    token:  "{{ K8S_TOKEN.stdout }}"
-    hash:   "{{ K8S_MASTER_CA_HASH.stdout }}"
+    command:  "{{ K8S_TOKEN.stdout }}"
 
 - name: Deploy kubernetes dashboard into cluster
   when: init_cluster is succeeded and enable_dashboard
