@@ -6,7 +6,7 @@
 
 - name: Install keepalived
   include_tasks: pkg.yml
-  when: master_hosts_count | int >= 3
+  when: master_hosts_count | int >= 1
 
 # - name: Init cluster if needed
 #   include_tasks: init.yml
