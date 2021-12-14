@@ -70,3 +70,6 @@ folders: ["default","kafka","userprofile"]
 
 # haproxy
 haproxy_version: 2.2.14
+
+# root-ca directory
+root_ca_directory: /tmp/rootca

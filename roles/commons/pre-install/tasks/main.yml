@@ -1,4 +1,7 @@
 ---
+- name: Install root certificates
+  include: add_root_ca.yml
+
 - name: Add the OS specific variables 
   include_vars: "{{ item }}"
   with_first_found:

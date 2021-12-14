@@ -1,0 +1,8 @@
+---
+- name: Copy a root ca into place
+  ansible.builtin.copy:
+    src: /tmp/rootca/*
+    dest: /etc/pki/ca-trust/source/anchors/
+
+- name: Update CA Trust (Red Hat)
+  command: update-ca-trust
