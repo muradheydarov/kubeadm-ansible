@@ -10,12 +10,12 @@
 #       run_once: yes
 #       tags: nfs
 
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  become_method: sudo
-  roles:
-    - { role: commons/pre-install, tags: pre-install }
+# - hosts: kube-cluster
+#   gather_facts: yes
+#   become: yes
+#   become_method: sudo
+#   roles:
+#     - { role: commons/pre-install, tags: pre-install }
 
 # - hosts: master
 #   gather_facts: yes
