@@ -1,0 +1,11 @@
+---
+
+- name: Join to Kubernetes cluster
+  when: reset_cluster is succeeded
+  shell: >
+    {{ hostvars['K8S_JOIN_COMMANDS']['worker_cmd'] }}
+  register: join_cluster
+  environment:
+    no_proxy: "$no_proxy,.svc,.svc.cluster.local"
+  notify:
+    - Recreate kube-dns

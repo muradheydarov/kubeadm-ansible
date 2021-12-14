@@ -1,39 +1,39 @@
 ---
-- hosts: repo
-  gather_facts: yes
-  become: yes
-  tasks:
-    - name: "NFS setup"
-      include_role:
-        name: nfs
-      when: "setup_nfs"
-      run_once: yes
-      tags: nfs
+# - hosts: repo
+#   gather_facts: yes
+#   become: yes
+#   tasks:
+#     - name: "NFS setup"
+#       include_role:
+#         name: nfs
+#       when: "setup_nfs"
+#       run_once: yes
+#       tags: nfs
 
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  become_method: sudo
-  roles:
-    - { role: commons/pre-install, tags: pre-install }
+# - hosts: kube-cluster
+#   gather_facts: yes
+#   become: yes
+#   become_method: sudo
+#   roles:
+#     - { role: commons/pre-install, tags: pre-install }
 
-- hosts: master
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: commons/firewall-rules/master, tags: master }
+# - hosts: master
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: commons/firewall-rules/master, tags: master }
 
-- hosts: worker
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: commons/firewall-rules/worker, tags: worker }    
+# - hosts: worker
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: commons/firewall-rules/worker, tags: worker }    
 
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: container-runtime, tags: container-runtime }
+# - hosts: kube-cluster
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: container-runtime, tags: container-runtime }
 
 - hosts: master
   gather_facts: yes

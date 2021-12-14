@@ -22,8 +22,6 @@ network: calico
 # For example, on DigitalOcean, you would use eth1 as that is the default private network interface.
 network_interface: ""
 
-enable_dashboard: yes
-
 # A list of insecure registries you might need to define
 # insecure_registries: []
 insecure_registries: ['gcr.io']
@@ -69,3 +67,6 @@ docker_proxy_exclude: "localhost,127.0.0.1"          # Adresses to exclude from 
 # NFS configs
 setup_nfs: false
 folders: ["default","kafka","userprofile"]
+
+# haproxy
+haproxy_version: 2.2.14

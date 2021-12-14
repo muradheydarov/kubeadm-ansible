@@ -1,0 +1,73 @@
+---
+- name: Install keepalived package
+  ansible.builtin.yum:
+    name: keepalived
+    state: latest
+
+- name: Install haproxy dependencies
+  ansible.builtin.yum:
+    name: 
+      - gcc
+      - pcre-devel
+      - tar
+      - make
+
+- name: Download haproxy-{{ haproxy_version }}.tar.gz
+  get_url:
+    url: https://azol-os-repo.simbrella.pro:9443/sre-repo/Packages/haproxy-{{ haproxy_version }}.tar.gz
+    dest: haproxy.tar.gz
+
+- name: Extract haproxy.tar.gz into haproxy-{{ haproxy_version }}
+  ansible.builtin.unarchive:
+    src: haproxy.tar.gz
+    dest: ~/
+
+- name: Make target linux-glibc
+  make:
+    chdir: ~/haproxy-{{ haproxy_version }}
+    target: linux-glibc
+
+- name: Make target install
+  make:
+    chdir: ~/haproxy-{{ haproxy_version }}
+    target: install
+
+- name: Create directories if they don't exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - /etc/haproxy
+    - /var/lib/haproxy
+
+- name: Touch a haproxy/stats file
+  ansible.builtin.file:
+    path: /var/lib/haproxy/stats
+    state: touch     
+
+- name: Create haproxy symbolic link 
+  file:
+    src: "/usr/local/sbin/haproxy"
+    dest: "/usr/sbin/haproxy"
+    state: link
+
+- name: Copy haproxy files
+  ansible.builtin.copy:
+    src: ~/haproxy-{{ haproxy_version }}/examples/haproxy.init
+    dest: /etc/init.d/haproxy
+    mode: '0755'
+
+- name: Just force systemd to reread configs (2.4 and above)
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Enable haproxy service for automatic start
+  service:
+    name: haproxy
+    enabled: yes
+
+- name: Creating user haproxy
+  user: 
+    name: haproxy
+    state: present    
+    system: yes
