@@ -42,7 +42,6 @@ backend apiserver
       mode tcp
       option ssl-hello-chk
       balance     roundrobin
-{% for host in groups['kube-cluster'] %}
+{% for host in groups['master'] %}
           server {{ hostvars[host]['ansible_facts']['hostname'] }} {{ hostvars[host]['ansible_facts']['fqdn'] }}:6443 check
-{% endfor %}      
-
+{% endfor %}
