@@ -24,7 +24,7 @@ vrrp_instance haproxy_check {
 {% endif %}
       interface {{ ansible_default_ipv4.interface }}
       virtual_router_id 151
-      priority 255
+      priority {{ 255 - groups['master'].index(inventory_hostname) }}
       authentication {
           auth_type PASS
           auth_pass P@##D321!
