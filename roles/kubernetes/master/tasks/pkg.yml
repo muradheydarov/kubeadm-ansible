@@ -25,9 +25,9 @@
     remote_src: yes
 
 - name: Make target linux-glibc
-  make:
-    chdir: ./haproxy-{{ haproxy_version }}
-    target: linux-glibc
+  shell: |
+    cd ./haproxy-{{ haproxy_version }}
+    make TARGET=linux-glibc
 
 - name: Make target install
   make:
