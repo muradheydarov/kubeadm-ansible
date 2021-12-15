@@ -36,7 +36,7 @@
     - name: "Keepalived setup"
       include_role:
         name: keepalived
-      when: master_hosts_count >= 3
+      when: master_hosts_count | int >= 3
       tags: keepalived
   vars:
     master_hosts_count: "{{ groups['master'] | length }}"
@@ -48,7 +48,7 @@
     - name: "Haproxy setup"
       include_role:
         name: haproxy
-      when: master_hosts_count >= 3
+      when: master_hosts_count | int >= 3
       tags: haproxy
   vars:
     master_hosts_count: "{{ groups['master'] | length }}"
