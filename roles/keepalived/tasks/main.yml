@@ -12,5 +12,11 @@
 
 - name: Configure keepalived
   ansible.builtin.template:
-    src: keepalived.j2
+    src: keepalived_config.j2
     dest: /etc/keepalived/keepalived.conf
+
+- name: Start and enable keepalived service
+  ansible.builtin.systemd:
+    name: keepalived
+    state: started
+    enabled: yes

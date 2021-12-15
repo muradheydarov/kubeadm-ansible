@@ -1,0 +1,48 @@
+global
+
+      log /dev/log  local0 warning
+      chroot      /var/lib/haproxy
+      pidfile     /var/run/haproxy.pid
+      maxconn     4000
+      user        haproxy
+      group       haproxy
+      daemon
+
+     stats socket /var/lib/haproxy/stats
+
+#---------------------------------------------------------------------
+# default configs
+#---------------------------------------------------------------------
+defaults
+
+    log global
+    option  httplog
+    option  dontlognull
+          timeout connect 5000
+          timeout client 50000
+          timeout server 50000
+
+#---------------------------------------------------------------------
+# apiserver frontend which proxys to the masters
+#---------------------------------------------------------------------
+frontend apiserver
+
+      bind *:{{ haproxy_port }}
+      mode tcp
+      option tcplog
+      default_backend apiserver
+
+#---------------------------------------------------------------------
+# round robin balancing for apiserver
+#---------------------------------------------------------------------
+backend apiserver
+
+      option httpchk GET /healthz
+      http-check expect status 200
+      mode tcp
+      option ssl-hello-chk
+      balance     roundrobin
+{% for host in groups['kube-cluster'] %}
+          server {{ hostvars[host]['ansible_facts']['hostname'] }} {{ hostvars[host]['ansible_facts']['fqdn'] }}:6443 check
+{% endfor %}      
+

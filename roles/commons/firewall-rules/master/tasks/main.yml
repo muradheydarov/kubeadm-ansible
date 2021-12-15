@@ -10,7 +10,7 @@
     dest: /etc/systemd/system/iptables.service
     
 - name: Enable and check iptables service
-  systemd:
+  ansible.builtin.systemd:
     name: iptables
     daemon_reload: yes
     state: started
