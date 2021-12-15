@@ -52,7 +52,6 @@
     src: "/usr/local/sbin/haproxy"
     dest: "/usr/sbin/haproxy"
     state: link
-    remote_src: yes
 
 - name: Copy haproxy files
   ansible.builtin.copy:
