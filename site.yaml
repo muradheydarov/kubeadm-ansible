@@ -32,14 +32,26 @@
 - hosts: master
   gather_facts: yes
   become: yes
-  roles:
-    - { role: keepalived, tags: keepalived }
+  tasks:
+    - name: "Keepalived setup"
+      include_role:
+        name: keepalived
+      when: master_hosts_count >= 3
+      tags: keepalived
+  vars:
+    master_hosts_count: "{{ groups['master'] | length }}"
 
 - hosts: master
   gather_facts: yes
   become: yes
-  roles:
-    - { role: haproxy, tags: haproxy }
+  tasks:
+    - name: "Haproxy setup"
+      include_role:
+        name: haproxy
+      when: master_hosts_count >= 3
+      tags: haproxy
+  vars:
+    master_hosts_count: "{{ groups['master'] | length }}"
 
 # - hosts: kube-cluster
 #   gather_facts: yes
