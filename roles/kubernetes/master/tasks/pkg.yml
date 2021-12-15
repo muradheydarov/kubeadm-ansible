@@ -20,7 +20,8 @@
 - name: Extract haproxy.tar.gz into haproxy-{{ haproxy_version }}
   ansible.builtin.unarchive:
     src: haproxy.tar.gz
-    dest: ./haproxy-{{ haproxy_version }}
+    creates: ./haproxy-{{ haproxy_version }}
+    dest: ./
 
 - name: Make target linux-glibc
   make:
