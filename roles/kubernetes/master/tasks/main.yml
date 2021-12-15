@@ -4,10 +4,6 @@
   shell: "kubeadm reset --force"
   register: reset_cluster
 
-- name: Install keepalived
-  include_tasks: pkg.yml
-  when: master_hosts_count | int >= 3
-
 - name: Init cluster if needed
   include_tasks: init.yml
   run_once: yes
