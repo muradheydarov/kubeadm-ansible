@@ -17,7 +17,7 @@ global_defs {
 
 vrrp_instance haproxy_check {
 
-{% if {{ hostvars[inventory_hostname]['ansible_facts']['default_ipv4']['address'] }} == {{ hostvars[groups['master'][0]]['ansible_facts']['default_ipv4']['address'] }} %}
+{% if hostvars[inventory_hostname]['ansible_default_ipv4']['address'] == hostvars[groups['master'][0]]['ansible_facts']['default_ipv4']['address'] %}
       state MASTER
 {% else %}
       state BACKUP
