@@ -15,21 +15,21 @@
 - name: Download haproxy-{{ haproxy_version }}.tar.gz
   get_url:
     url: https://azol-os-repo.simbrella.pro:9443/sre-repo/Packages/haproxy-{{ haproxy_version }}.tar.gz
-    dest: haproxy.tar.gz
+    dest: ./haproxy.tar.gz
 
 - name: Extract haproxy.tar.gz into haproxy-{{ haproxy_version }}
   ansible.builtin.unarchive:
     src: haproxy.tar.gz
-    dest: ~/
+    dest: ./
 
 - name: Make target linux-glibc
   make:
-    chdir: ~/haproxy-{{ haproxy_version }}
+    chdir: ./haproxy-{{ haproxy_version }}
     target: linux-glibc
 
 - name: Make target install
   make:
-    chdir: ~/haproxy-{{ haproxy_version }}
+    chdir: ./haproxy-{{ haproxy_version }}
     target: install
 
 - name: Create directories if they don't exist
@@ -53,7 +53,7 @@
 
 - name: Copy haproxy files
   ansible.builtin.copy:
-    src: ~/haproxy-{{ haproxy_version }}/examples/haproxy.init
+    src: ./haproxy-{{ haproxy_version }}/examples/haproxy.init
     dest: /etc/init.d/haproxy
     mode: '0755'
 
