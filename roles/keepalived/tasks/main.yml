@@ -1,0 +1,18 @@
+---
+- name: Install keepalived package
+  ansible.builtin.yum:
+    name: keepalived
+    state: latest
+
+- name: Create haproxy check script
+  ansible.builtin.template:
+    src: check_haproxy.j2
+    dest: /etc/keepalived/check_haproxy.sh
+    mode: '0755'
+
+- name: Configure keepalived
+  ansible.builtin.template:
+    src: keepalived.j2
+    dest: /etc/keepalived/keepalived.conf
+  vars:
+    myTemplateVariable: myDirName    

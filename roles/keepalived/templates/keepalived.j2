@@ -1,0 +1,39 @@
+global_defs {
+
+    router_id LVS_DEVEL
+    vrrp_skip_check_adv_addr
+    vrrp_garp_interval 0
+    vrrp_gna_interval 0
+
+} vrrp_script chk_haproxy {
+
+        script "/etc/keepalived/check_haproxy.sh"
+        interval 2
+        timeout 5
+        rise 2
+        fall 2
+
+}
+
+vrrp_instance haproxy_check {
+
+{% if {{ hostvars[inventory_hostname]['ansible_facts']['default_ipv4']['address'] }} == {{ hostvars[groups['master'][0]]['ansible_facts']['default_ipv4']['address'] }} %}
+      state MASTER
+{% else %}
+      state BACKUP
+{% endif %}
+      interface {{ ansible_default_ipv4.interface }}
+      virtual_router_id 151
+      priority 255
+      authentication {
+          auth_type PASS
+          auth_pass P@##D321!
+      }
+      virtual_ipaddress {
+          {{ keepalived_virtual_ip }}
+      }
+      track_script {
+          chk_haproxy
+      }
+
+}

@@ -1,0 +1,9 @@
+#!/bin/sh
+HAPROXY_DEST_PORT={{ haproxy_port }}
+
+errorExit() {
+    echo "*** $*" 1>&2
+    exit 1
+}
+
+curl --silent --max-time 1 --insecure https://localhost:${HAPROXY_DEST_PORT}/ -o /dev/null || errorExit "Error GET https://localhost:${HAPROXY_DEST_PORT}/"

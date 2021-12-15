@@ -1,8 +1,4 @@
 ---
-- name: Install keepalived package
-  ansible.builtin.yum:
-    name: keepalived
-    state: latest
 
 - name: Install haproxy dependencies
   ansible.builtin.yum:
@@ -60,7 +56,7 @@
     mode: '0755'
     remote_src: yes
 
-- name: Just force systemd to reread configs (2.4 and above)
+- name: Just force systemd to reread configs
   ansible.builtin.systemd:
     daemon_reload: yes
 

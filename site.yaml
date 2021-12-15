@@ -27,7 +27,19 @@
 #   gather_facts: yes
 #   become: yes
 #   roles:
-#     - { role: commons/firewall-rules/worker, tags: worker }    
+#     - { role: commons/firewall-rules/worker, tags: worker } 
+
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: keepalived, tags: keepalived }
+
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: haproxy, tags: haproxy }
 
 # - hosts: kube-cluster
 #   gather_facts: yes
@@ -35,18 +47,18 @@
 #   roles:
 #     - { role: container-runtime, tags: container-runtime }
 
-- hosts: master
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: kubernetes/master, tags: master }
-    - { role: cni, tags: cni }
+# - hosts: master
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: kubernetes/master, tags: master }
+#     - { role: cni, tags: cni }
 
-- hosts: worker
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: kubernetes/worker, tags: worker }
+# - hosts: worker
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: kubernetes/worker, tags: worker }
 
 # - hosts: master
 #   gather_facts: yes
