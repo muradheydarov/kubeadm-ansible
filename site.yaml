@@ -38,8 +38,6 @@
         name: keepalived
       when: master_hosts_count | int >= 3
       tags: keepalived
-  vars:
-    master_hosts_count: "{{ groups['master'] | length }}"
 
 - hosts: master
   gather_facts: yes
@@ -50,8 +48,6 @@
         name: haproxy
       when: master_hosts_count | int >= 3
       tags: haproxy
-  vars:
-    master_hosts_count: "{{ groups['master'] | length }}"
 
 # - hosts: kube-cluster
 #   gather_facts: yes

@@ -3,9 +3,9 @@
 - name: Join to cluster
   include_tasks: join.yml  
 
-# - name: Enable and check kubelet service
-#   systemd:
-#     name: kubelet
-#     daemon_reload: yes
-#     state: started
-#     enabled: yes
+- name: Enable and check kubelet service
+  systemd:
+    name: kubelet
+    daemon_reload: yes
+    state: started
+    enabled: yes
