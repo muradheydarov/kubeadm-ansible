@@ -38,7 +38,6 @@
         name: keepalived
       when: master_hosts_count | int >= 3
       tags: keepalived
-      include_vars: predefined_vars.yml      
 
 - hosts: master
   gather_facts: yes
@@ -49,7 +48,6 @@
         name: haproxy
       when: master_hosts_count | int >= 3
       tags: haproxy
-      include_vars: predefined_vars.yml
 
 
 # - hosts: kube-cluster
