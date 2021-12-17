@@ -1,9 +1,13 @@
 ---
 
+- name: Print the gateway for each host when defined
+  ansible.builtin.debug:
+    msg: "{{ lookup('template', 'join.j2') }}"    
+
 - name: Join to Kubernetes cluster
   when: reset_cluster is succeeded
   shell: >
-    {{ lookup('template', 'join.j2') }}  
+    {{ lookup('template', 'join.j2') }}
   environment:
     no_proxy: "$no_proxy,.svc,.svc.cluster.local"
   notify:
