@@ -1,7 +1,7 @@
 ---
 
 - name: Join to Kubernetes cluster
-  when: reset_cluster is succeeded and groups['master'].index(inventory_hostname) == 0
+  when: reset_cluster is succeeded and groups['master'].index(inventory_hostname) != 0
   shell: >
     {{ lookup('template', 'join.j2') }}
   environment:
