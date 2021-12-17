@@ -42,4 +42,4 @@
   add_host:
     name:   "K8S_PARAMS"
     master_certificate_key:  "{{ CERTIFICATE_KEY.stdout_lines|list|last }}"
-    join_command:  "{{ K8S_JOIN_COMMAND.stdout }}"    
+    join_command:  "{{ K8S_JOIN_COMMAND.stdout }}"

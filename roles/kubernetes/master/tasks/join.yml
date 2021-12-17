@@ -1,11 +1,7 @@
 ---
 
-- name: Print the gateway for each host when defined
-  ansible.builtin.debug:
-    msg: "{{ lookup('template', 'join.j2') }}"    
-
 - name: Join to Kubernetes cluster
-  when: reset_cluster is succeeded
+  when: reset_cluster is succeeded and groups['master'].index(inventory_hostname) == 0
   shell: >
     {{ lookup('template', 'join.j2') }}
   environment:
