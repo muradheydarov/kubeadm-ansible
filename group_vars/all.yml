@@ -65,7 +65,7 @@ proxy_server: "proxy.example.com:8080"               # Proxy server address and 
 docker_proxy_exclude: "localhost,127.0.0.1"          # Adresses to exclude from proxy
 
 # NFS configs
-setup_nfs: false
+setup_nfs: true
 folders: ["default","kafka","userprofile"]
 
 # haproxy

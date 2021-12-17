@@ -30,16 +30,16 @@
     mode: 0755
     remote_src: true
 
-- name: Get the join command for the master nodes
-  shell: kubeadm token create --print-join-command
-  register: K8S_TOKEN
+- name: Generate a new certificate key for the master nodes
+  shell: kubeadm init phase upload-certs --upload-certs
+  register: CERTIFICATE_KEY
 
 - name: Get the join command for the worker nodes
   shell: kubeadm token create --print-join-command
-  register: K8S_WORKER_COMMAND
+  register: K8S_JOIN_COMMAND
 
 - name: "Add K8S Token and Hash to dummy host"
   add_host:
-    name:   "K8S_JOIN_COMMANDS"
-    master_cmd:  "{{ K8S_TOKEN.stdout }}"
-    worker_cmd:  "{{ K8S_WORKER_COMMAND.stdout }}"    
+    name:   "K8S_PARAMS"
+    master_certificate_key:  "{{ CERTIFICATE_KEY.stdout_lines|list }}"
+    join_command:  "{{ K8S_JOIN_COMMAND.stdout }}"    
