@@ -1,1 +1,1 @@
-{{ hostvars['K8S_PARAMS']['join_command'] }} --control-plane --certificate-key hostvars['K8S_PARAMS']['master_certificate_key']
+{{ hostvars['K8S_PARAMS']['join_command'] }} --control-plane --certificate-key {{ hostvars['K8S_PARAMS']['master_certificate_key'] }}
