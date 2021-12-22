@@ -1,7 +1,7 @@
 ---
 
 - name: Init Kubernetes HA cluster
-  when: reset_cluster is succeeded and master_hosts_count| int >= 3
+  when: reset_cluster is succeeded and master_hosts_count | int >= 3
   shell: |
     kubeadm init --control-plane-endpoint {{ control-plane-host }}:{{ haproxy_port }}
                  --kubernetes-version {{ k8s_version }} \
