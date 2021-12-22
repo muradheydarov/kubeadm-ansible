@@ -1,7 +1,7 @@
 ---
 
 - name: Init Kubernetes HA cluster
-  when: reset_cluster is succeeded and master_hosts_count >= 3
+  when: reset_cluster is succeeded and master_hosts_count| int >= 3
   shell: |
     kubeadm init --control-plane-endpoint {{ control-plane-host }}:{{ haproxy_port }}
                  --kubernetes-version {{ k8s_version }} \
@@ -16,7 +16,7 @@
     no_proxy: "$no_proxy,.svc,.svc.cluster.local"
 
 - name: Init Kubernetes single master cluster
-  when: reset_cluster is succeeded and master_hosts_count == 1
+  when: reset_cluster is succeeded and master_hosts_count | int == 1
   shell: |
     kubeadm init --kubernetes-version {{ k8s_version }} \
                  --pod-network-cidr {{ pod_network_cidr }} \
