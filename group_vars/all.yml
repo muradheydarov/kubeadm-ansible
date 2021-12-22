@@ -76,7 +76,7 @@ haproxy_port: 8443
 keepalived_virtual_ip: 172.18.184.180/32
 
 # control plane host
-control-plane-host: test-k8s-m
+control_plane_host: test-k8s-m
 
 # root-ca directory
 root_ca_directory: /tmp/rootca
