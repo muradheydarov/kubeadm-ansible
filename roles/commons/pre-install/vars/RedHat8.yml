@@ -1,6 +1,7 @@
 ---
 basic_packages:
   - vim
+  - git
   - bash-completion
   - wget
   - curl

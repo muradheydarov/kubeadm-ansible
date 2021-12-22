@@ -16,36 +16,28 @@
   block:
     - name: "Get Helm installer"
       get_url:
-        url: https://raw.githubusercontent.com/helm/helm/master/scripts/get
-        dest: "{{ tmp_dir }}/get_helm.sh"
-        mode: 0755
+        url: https://azol-os-repo.simbrella.pro:9443/sre-repo/Packages/helm-{{ helm_version }}-linux-amd64.tar.gz
+        dest: "{{ tmp_dir }}/helm-{{ helm_version }}-linux-amd64.tar.gz"
 
-    - name: "Run the installer"
-      environment:
-          DESIRED_VERSION: "{{ helm_version }}"
-      shell: "{{ tmp_dir }}/get_helm.sh"
+    - name: Extract helm-{{ helm_version }}-linux-amd64.tar.gz
+      ansible.builtin.unarchive:
+      src: helm-{{ helm_version }}-linux-amd64.tar.gz
+      creates: "helm-{{helm_version}}"
+      dest: "{{ tmp_dir }}"
+      remote_src: yes
 
   when: helm_exists.rc > 0
   tags: helm
 
-- name: "Copy yaml file"
-  copy:
-    src: "rbac-config.yml"
-    dest: "{{ tmp_dir }}/rbac-config.yml"
-    mode: 0644
-  tags: helm
+- name: Move Helm binary it to its desired destination
+  ansible.builtin.copy:
+    src: "{{ tmp_dir }}/helm-{{helm_version}}/helm"
+    dest: /usr/local/bin/helm
 
-- name: "RBAC configuration"
-  shell: "kubectl apply -f {{ tmp_dir }}/rbac-config.yml"
-  tags: helm
-
-- name: "Init Helm"
-  shell: "helm init --service-account tiller"
-  tags: helm
-
-- name: "Update Helm repo"
-  shell: "helm repo update"
-  tags: helm
+- name: Add Azol Helm charts repository
+  kubernetes.core.helm_repository:
+    name: azol-chartrepo
+    repo_url: https://azol-harbor.simbrella.pro/chartrepo/azol-chartrepo
 
 - name: "Clean-up"
   file:

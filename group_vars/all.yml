@@ -13,7 +13,7 @@ kubeadm_opts: ""
 # kubeadm_opts: '--apiserver-cert-extra-sans "k8s.domain.com,kubernetes.domain.com"'
 
 service_cidr: "10.96.0.0/12"
-pod_network_cidr: "10.244.0.0/16"
+pod_network_cidr: "10.140.140.0/24"
 
 # Network implementation('flannel', 'calico', 'canal')
 network: calico
@@ -34,7 +34,7 @@ kube_addon_dir: /etc/kubernetes/addon
 
 # Additional feature to install
 additional_features:
-  helm: false
+  helm: true
   metallb: false
   healthcheck: false
 
@@ -45,7 +45,7 @@ tmp_dir: /tmp/kubeadm-ansible-files
 container_runtime: docker
 
 # helm helm version
-# helm_version: "v2.17.0"
+helm_version: "v3.5.4"
 
 # SELinux state to be set on k8s nodes                 
 selinux_state: permissive                              
@@ -73,8 +73,10 @@ haproxy_version: 2.2.14
 haproxy_port: 8443
 
 # keepalived
+keepalived_virtual_ip: 172.18.184.180/32
 
-keepalived_virtual_ip: 172.16.20.60/32
+# control plane host
+control-plane-host: test-k8s-m
 
 # root-ca directory
 root_ca_directory: /tmp/rootca

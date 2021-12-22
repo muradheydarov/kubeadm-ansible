@@ -1,7 +1,22 @@
 ---
 
-- name: Init Kubernetes cluster
-  when: reset_cluster is succeeded
+- name: Init Kubernetes HA cluster
+  when: reset_cluster is succeeded and master_hosts_count >= 3
+  shell: |
+    kubeadm init --control-plane-endpoint {{ control-plane-host }}:{{ haproxy_port }}
+                 --kubernetes-version {{ k8s_version }} \
+                 --pod-network-cidr {{ pod_network_cidr }} \
+                 --service-cidr {{ service_cidr }} \
+                 --upload-certs \                 
+                 {{ kubeadm_opts }} \
+                 {{ init_opts }}
+
+  register: init_cluster
+  environment:
+    no_proxy: "$no_proxy,.svc,.svc.cluster.local"
+
+- name: Init Kubernetes single master cluster
+  when: reset_cluster is succeeded and master_hosts_count == 1
   shell: |
     kubeadm init --kubernetes-version {{ k8s_version }} \
                  --pod-network-cidr {{ pod_network_cidr }} \
@@ -11,9 +26,8 @@
                  {{ init_opts }}
 
   register: init_cluster
-  # See: https://github.com/jetstack/cert-manager/issues/2640 with using kubeadm + calico + cert-manager
   environment:
-    no_proxy: "$no_proxy,.svc,.svc.cluster.local"
+    no_proxy: "$no_proxy,.svc,.svc.cluster.local"    
 
 - name: Create Kubernetes config directory
   file:
