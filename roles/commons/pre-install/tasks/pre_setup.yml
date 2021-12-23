@@ -18,6 +18,7 @@
 - name: Install some python packages needed to configure the ansible
   pip:
     name: "{{ item }}"
+    executable: pip3
   loop:
     - "{{ python_packages }}"
 
