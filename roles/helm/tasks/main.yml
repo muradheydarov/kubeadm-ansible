@@ -6,12 +6,6 @@
     mode: 0755
   tags: helm
 
-- name: "Check if Helm is installed"
-  shell: command -v helm >/dev/null 2>&1
-  register: helm_exists
-  ignore_errors: yes
-  tags: helm
-
 - name: "Install Helm"
   block:
     - name: "Get Helm installer"
@@ -25,8 +19,6 @@
         creates: "helm-{{helm_version}}"
         dest: "{{ tmp_dir }}"
         remote_src: yes
-
-  when: helm_exists.rc > 0
   tags: helm
 
 - name: Move Helm binary it to its desired destination
