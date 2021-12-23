@@ -8,3 +8,8 @@ basic_packages:
   - yum-utils
   - lvm2
   - device-mapper-persistent-data
+  - epel-release
+  - python-pip
+
+python_packages:
+  - PyYAML

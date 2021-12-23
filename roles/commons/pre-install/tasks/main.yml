@@ -1,6 +1,6 @@
 ---
-- name: Install root certificates
-  include: add_root_ca.yml
+# - name: Install root certificates
+#   include: add_root_ca.yml
 
 - name: Add the OS specific variables 
   include_vars: "{{ item }}"
@@ -11,18 +11,18 @@
 - name: Include Pre-reqs setup task
   include: pre_setup.yml
 
-- name: Include task to disable swap
-  include: disable_swap.yml
+# - name: Include task to disable swap
+#   include: disable_swap.yml
 
-- name: Include task to configure timezone and ntp
-  include: configure_timezone_ntp.yml
+# - name: Include task to configure timezone and ntp
+#   include: configure_timezone_ntp.yml
 
-- name: Include task to load required kernel modules and sysctl configs
-  include: load_kernel_modules_sysctl.yml
+# - name: Include task to load required kernel modules and sysctl configs
+#   include: load_kernel_modules_sysctl.yml
 
-- name: Include task to configure /etc/hosts file on each node
-  include: configure_etc_host_file.yml
-  when: configure_etc_host_file
+# - name: Include task to configure /etc/hosts file on each node
+#   include: configure_etc_host_file.yml
+#   when: configure_etc_host_file
 
-- name: Include task to install  k8s packages
-  include: install_k8s_packages.yml
+# - name: Include task to install  k8s packages
+#   include: install_k8s_packages.yml
