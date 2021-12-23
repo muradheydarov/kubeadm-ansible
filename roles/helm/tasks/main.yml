@@ -16,14 +16,13 @@
     - name: Extract helm-{{ helm_version }}-linux-amd64.tar.gz
       ansible.builtin.unarchive:
         src: "{{ tmp_dir }}/helm-{{ helm_version }}-linux-amd64.tar.gz"
-        creates: "helm-{{helm_version}}"
         dest: "{{ tmp_dir }}"
         remote_src: yes
   tags: helm
 
 - name: Move Helm binary it to its desired destination
   ansible.builtin.copy:
-    src: "{{ tmp_dir }}/helm-{{helm_version}}/helm"
+    src: "{{ tmp_dir }}/linux-amd64/helm"
     dest: /usr/local/bin/helm
     remote_src: yes
 
