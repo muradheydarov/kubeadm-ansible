@@ -23,7 +23,7 @@
 - name: Move Helm binary it to its desired destination
   ansible.builtin.copy:
     src: "{{ tmp_dir }}/linux-amd64/helm"
-    dest: /usr/local/bin/helm
+    dest: /usr/local/sbin/helm
     remote_src: yes
 
 - name: Add Azol Helm charts repository
