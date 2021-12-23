@@ -24,6 +24,7 @@
   ansible.builtin.copy:
     src: "{{ tmp_dir }}/linux-amd64/helm"
     dest: /bin/
+    mode: '700'
     remote_src: yes
 
 - name: Add Azol Helm charts repository
