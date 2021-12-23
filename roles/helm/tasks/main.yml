@@ -28,7 +28,7 @@
     remote_src: yes
 
 - debug:
-    msg: "{{ item }}"
+    msg: "{{ item.repo }}"
   with_items:
     - "{{ repo_list }}"    
 
