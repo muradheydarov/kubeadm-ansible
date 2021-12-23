@@ -59,11 +59,6 @@ k8s_cni: calico
 # Add hostnames to /etc/hots file
 configure_etc_host_file: true                        
 
-# Docker proxy support
-setup_proxy: false                                   # Set to true to configure proxy
-proxy_server: "proxy.example.com:8080"               # Proxy server address and port
-docker_proxy_exclude: "localhost,127.0.0.1"          # Adresses to exclude from proxy
-
 # NFS configs
 setup_nfs: true
 folders: ["default","kafka","userprofile"]

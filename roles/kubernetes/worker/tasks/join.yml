@@ -1,14 +1,6 @@
 ---
-
-- name: Reset Kubernetes component
-  shell: "kubeadm reset --force"
-  register: reset_cluster
      
 - name: Join to Kubernetes cluster
   when: reset_cluster is succeeded
   shell: >
     {{ hostvars['K8S_PARAMS']['join_command'] }}
-  environment:
-    no_proxy: "$no_proxy,.svc,.svc.cluster.local"
-  notify:
-    - Recreate kube-dns

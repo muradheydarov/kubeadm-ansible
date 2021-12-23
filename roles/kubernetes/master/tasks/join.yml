@@ -4,7 +4,7 @@
   when: reset_cluster is succeeded and groups['master'].index(inventory_hostname) != 0
   shell: >
     {{ lookup('template', 'join.j2') }}
-  environment:
-    no_proxy: "$no_proxy,.svc,.svc.cluster.local"
-  notify:
-    - Recreate kube-dns
+  register: kubeadm_join_control_plane
+  retries: 3
+  throttle: 1
+  until: kubeadm_join_control_plane is succeeded
