@@ -15,7 +15,7 @@
 
     - name: Extract helm-{{ helm_version }}-linux-amd64.tar.gz
       ansible.builtin.unarchive:
-        src: helm-{{ helm_version }}-linux-amd64.tar.gz
+        src: "{{ tmp_dir }}/helm-{{ helm_version }}-linux-amd64.tar.gz"
         creates: "helm-{{helm_version}}"
         dest: "{{ tmp_dir }}"
         remote_src: yes
