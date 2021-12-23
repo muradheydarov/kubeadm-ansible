@@ -27,10 +27,12 @@
     mode: '700'
     remote_src: yes
 
-- name: Add Azol Helm charts repository
+- name: Add Helm chart repositories
   kubernetes.core.helm_repository:
-    name: azol-chartrepo
-    repo_url: https://azol-harbor.simbrella.pro/chartrepo/azol-chartrepo
+    name: "{{ item.repo.name }}"
+    repo_url: "{{ item.repo.url }}"
+  loop:
+    - "{{ repo_list }}"
   vars:
     ansible_python_interpreter: /bin/python3
 

@@ -1,0 +1,4 @@
+repo_list:
+- repo:
+    name: azol-chartrepo
+    url: https://azol-harbor.simbrella.pro/chartrepo/azol    
