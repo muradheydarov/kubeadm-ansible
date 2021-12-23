@@ -76,7 +76,6 @@
       include_role:
         name: helm
       when: "additional_features.helm"
-      run_once: yes
       tags: helm
 
 #     - name: "MetalLB role"
