@@ -27,10 +27,11 @@
     remote_src: yes
 
 - name: Add Azol Helm charts repository
-  ansible_python_interpreter: /bin/python3  
   kubernetes.core.helm_repository:
     name: azol-chartrepo
     repo_url: https://azol-harbor.simbrella.pro/chartrepo/azol-chartrepo
+  vars:
+    ansible_python_interpreter: /bin/python3
 
 - name: "Clean-up"
   file:
