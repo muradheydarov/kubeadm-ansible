@@ -9,12 +9,6 @@
     name: "*"
     state: latest
 
-- name: Enable the EPEL repo
-  yum:
-    name: epel-release
-    enablerepo: extras
-    state: present
-
 - name: Install some packages needed to configure the nodes
   ansible.builtin.package:
     name: "{{ item }}"
