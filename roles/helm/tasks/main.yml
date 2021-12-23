@@ -27,6 +27,11 @@
     mode: '700'
     remote_src: yes
 
+- debug:
+    msg: "{{ item }}"
+  with_items:
+    - "{{ repo_list }}"    
+
 - name: Add Helm chart repositories
   kubernetes.core.helm_repository:
     name: "{{ item.repo.name }}"
