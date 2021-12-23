@@ -36,7 +36,7 @@
   kubernetes.core.helm_repository:
     name: "{{ item.repo.name }}"
     repo_url: "{{ item.repo.url }}"
-  loop:
+  with_items:
     - "{{ repo_list }}"
   vars:
     ansible_python_interpreter: /bin/python3
