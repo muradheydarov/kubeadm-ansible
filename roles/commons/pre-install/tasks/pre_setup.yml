@@ -4,12 +4,6 @@
     policy: targeted
     state: "{{ selinux_state }}"
 
-- name: Install some python packages needed to configure the ansible
-  pip:
-    name: "{{ item }}"
-  loop:
-    - "{{ python_packages }}"
-
 - name: Update system packages
   package:
     name: "*"
@@ -21,6 +15,12 @@
   loop:
     - "{{ basic_packages }}"
   
+- name: Install some python packages needed to configure the ansible
+  pip:
+    name: "{{ item }}"
+  loop:
+    - "{{ python_packages }}"
+      
 - name: Disable firewalld service
   ansible.builtin.service:
     name: firewalld
