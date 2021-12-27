@@ -10,12 +10,12 @@
 #       run_once: yes
 #       tags: nfs
 
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  become_method: sudo
-  roles:
-    - { role: commons/pre-install, tags: pre-install }
+# - hosts: kube-cluster
+#   gather_facts: yes
+#   become: yes
+#   become_method: sudo
+#   roles:
+#     - { role: commons/pre-install, tags: pre-install }
 
 # - hosts: master
 #   gather_facts: yes
@@ -78,16 +78,16 @@
       when: "additional_features.helm"
       tags: helm
 
-#     - name: "MetalLB role"
-#       include_role:
-#         name: metallb
-#       when: "additional_features.metallb"
-#       run_once: yes
-#       tags: metallb
+    - name: "MetalLB role"
+      include_role:
+        name: metallb
+      when: "additional_features.metallb"
+      run_once: yes
+      tags: metallb
 
-#     - name: "Healthcheck role"
-#       include_role:
-#         name: healthcheck
-#       when: "additional_features.healthcheck"
-#       run_once: yes
-#       tags: healthcheck
+    - name: "Nginx-Ingress role"
+      include_role:
+        name: nginx-ingress
+      when: "additional_features.nginx_ingress"
+      run_once: yes
+      tags: nginx-ingress

@@ -22,21 +22,14 @@ network: calico
 # For example, on DigitalOcean, you would use eth1 as that is the default private network interface.
 network_interface: ""
 
-# A list of insecure registries you might need to define
-# insecure_registries: []
-insecure_registries: ['gcr.io']
-
-systemd_dir: /lib/systemd/system
-system_env_dir: /etc/sysconfig
 network_dir: /etc/kubernetes/network
 kubeadmin_config: /etc/kubernetes/admin.conf
-kube_addon_dir: /etc/kubernetes/addon
 
 # Additional feature to install
 additional_features:
   helm: true
-  metallb: false
-  healthcheck: false
+  metallb: true
+  nginx_ingress: true
 
 # temporary directory used by additional features
 tmp_dir: /tmp/kubeadm-ansible-files
@@ -75,3 +68,10 @@ control_plane_host: test-k8s-m
 
 # root-ca directory
 root_ca_directory: /tmp/rootca
+
+# metallb
+
+metallb_version: v0.11.0
+metallb_yaml_url: "https://raw.githubusercontent.com/google/metallb/{{ metallb_version }}/manifests/metallb.yaml"
+metallb_namespace_yaml_url: "https://raw.githubusercontent.com/metallb/metallb/{{ metallb_version }}/manifests/metallb.yaml"
+metallb_address_space: 192.168.205.200-192.168.205.210

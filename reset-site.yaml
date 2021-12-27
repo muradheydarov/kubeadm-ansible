@@ -49,3 +49,15 @@
       shell: "ip route del {{ find_blackhole.stdout }}"
       ignore_errors: True
 
+    - name: Remove old k8s directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - /var/lib/etcd
+        - /var/lib/kubelet
+        - $HOME/.kube/config
+        - /var/run/kubernetes
+        - /var/lib/dockershim
+        - /etc/kubernetes
+        - /etc/cni

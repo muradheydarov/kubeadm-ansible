@@ -1,0 +1,10 @@
+---
+- name: Deploy nginx-ingress chart
+  kubernetes.core.helm:
+    name: nginx-ingress
+    chart_ref: bitnami/nginx-ingress-controller
+    chart_version: "7.6.10"  
+    release_namespace: nginx-ingress
+    create_namespace: yes
+    wait: True
+    values: "{{ lookup('template', 'values.yml.j2') | from_yaml }}"

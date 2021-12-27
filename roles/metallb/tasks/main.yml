@@ -6,6 +6,10 @@
     mode: 0755
   tags: metallb
 
+- name: "Create metallb-system namespace"
+  shell: "kubectl apply -f {{ metallb_namespace_yaml_url }}"
+  tags: metallb
+
 - name: "Install MetalLB"
   shell: "kubectl apply -f {{ metallb_yaml_url }}"
   tags: metallb
